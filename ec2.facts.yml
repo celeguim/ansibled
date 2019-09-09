@@ -1,0 +1,92 @@
+#
+#  https://docs.w3cub.com/ansible~2.7/modules/ec2_vpc_igw_module/
+#
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    aws_access_key: AKIATXJXGAW4IINTW6W7
+    aws_secret_key: 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
+    aws_region: us-east-1
+    aws_vpc_id: vpc-0ebcec400207ad579
+
+  tasks:
+
+    - name: Get EC2 Facts
+      run_once: true
+      ec2_instance_facts:
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        filters: 
+          "tag:creator": ansible
+      register: ec2_instance_facts
+
+    - name: Debug instances
+      vars:
+        msg: | 
+          instance_id: {{ item.instance_id }}
+          launch_time: {{ item.launch_time }}
+      debug: 
+        msg: "{{ msg.split('\n') }}"       
+      loop: "{{ ec2_instance_facts.instances }}"
+
+    - name: Get VPC Facts
+      run_once: true
+      ec2_vpc_net_facts:
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2_vpc_net_facts
+
+    - name: Debug VPC's
+      vars:
+        msg: | 
+          vpc_id: {{ item.vpc_id }}
+          is_default: {{ item.is_default }}
+          state: {{ item.state }}
+      debug: 
+        msg: "{{ msg.split('\n') }}"       
+      loop: "{{ ec2_vpc_net_facts.vpcs }}"
+
+    - name: Get VPC Internet GW Facts
+      run_once: true
+      ec2_vpc_igw:
+        vpc_id: "{{ ec2_vpc_net_facts.vpcs[0].vpc_id }}"
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2_vpc_igw
+    - debug: var=ec2_vpc_igw
+
+    - name: Get Security Groups Facts
+      run_once: true
+      ec2_group_facts:
+        #vpc_id: "{{ ec2_vpc_net_facts.vpcs[0].vpc_id }}"
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2_group_facts
+    - debug: var=ec2_group_facts
+
+    - name: Get VPC Subnet Facts
+      run_once: true
+      ec2_vpc_subnet_facts:
+        #vpc_id: "{{ ec2_vpc_net_facts.vpcs[0].vpc_id }}"
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2_vpc_subnet_facts
+    - debug: var=ec2_vpc_subnet_facts
+
+    - name: Get VPC NAT Gateways Facts
+      run_once: true
+      ec2_vpc_nat_gateway_facts:
+        #vpc_id: "{{ ec2_vpc_net_facts.vpcs[0].vpc_id }}"
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: ec2_vpc_nat_gateway_facts
+    - debug: var=ec2_vpc_nat_gateway_facts
+
