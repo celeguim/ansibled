@@ -6,8 +6,8 @@
   gather_facts: false
 
   vars:
-    aws_access_key: AKIATXJXGAW4IINTW6W7
-    aws_secret_key: 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
+    aws_access_key: AAAAAAAAAAAAAAAAAA
+    aws_secret_key: BBBBBBBBBBBBBBBBBB
     aws_region: us-east-1
     aws_vpc_id: vpc-0ebcec400207ad579
 
