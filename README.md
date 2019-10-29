@@ -1,3 +1,7 @@
+# Requirements
+boto3 // pip install boto3
+ntp // sudo ntpdate us.pool.ntp.org
+
 # Ansibled
 This repository supports the "Automation with Ansible" series by Tom Wright on Medium.
 
