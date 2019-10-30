@@ -10,4 +10,3 @@ vpc_use_nat: false
 
 # credentials for AWS (no, they aren't real...)
 aws_region: us-east-1
-

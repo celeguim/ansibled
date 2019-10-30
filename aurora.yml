@@ -2,6 +2,7 @@
 # ---
 # playbook that builds Aurora clusters and Aurora DB instances
 
+
 # first run a play for any cluster hosts to create them
 - hosts: aurora.cluster
   environment:

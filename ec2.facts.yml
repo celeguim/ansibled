@@ -6,11 +6,16 @@
   gather_facts: false
 
   vars:
-    aws_access_key: AAAAAAAAAAAAAAAAAA
-    aws_secret_key: BBBBBBBBBBBBBBBBBB
+    aws_access_key: "{{ vault_aws_access_key }}"
+    aws_secret_key: "{{ vault_aws_secret_key }}"
     aws_region: us-east-1
     aws_vpc_id: vpc-0ebcec400207ad579
 
+#  environment:
+#    AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
+#    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
+#    AWS_REGION: "{{ aws_region }}"
+    
   tasks:
 
     - name: Get EC2 Facts
