@@ -1,15 +1,9 @@
 # Requirements
-<<<<<<< Updated upstream
-boto3 // pip install boto3
-
-ntp // sudo ntpdate us.pool.ntp.org
-=======
 - sudo ntpdate us.pool.ntp.org
 - sudo python -m pip install --user boto3
 - ansible-vault --vault-password-file=~/.vault_pass [encrypt,edit,view] group_vars/all.yml
 - echo 'my_vault_password' > ~/.vault_pass
 - chmod 600 ~/.vault_pass
->>>>>>> Stashed changes
 
 
 # Ansibled
